@@ -5,8 +5,9 @@ http://www.avenidanet.com
 
 Documentación y proyecto en http://www.avenidanet.com/acore (No habilitado todavía)
 
-Este framework trata de facilitar el manejo de bases de datos 
-y proyectos desarrollados en PHP, mediante el uso de MVC junto a creación de módulos.
+Desarrollo orientado a módulos (basados en Model View Controller).
+Cada modulo es llamado ACM (ACore Módulo).
+Además gestiona fácilmente base de datos, templates, llamados a apis, validaciones, etc.
 
 Este desarrollo esta bajo licencia MIT.
 

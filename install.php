@@ -17,7 +17,7 @@ if(isset($_GET['module'])){
 	$module = $_GET['module'];
 	
 	if(!file_exists('../'.$module)){
-		$copyright = " // Module created by ACore -".time()."
+		$copyright = " // ACM (".$module.") created by ACore -".time()."
 ";
 		//create directory
 		mkdir('../'.$module);
@@ -67,7 +67,7 @@ fwrite($index,'<?php'.$copyright.'?>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>ACore Simple framework php | Avenidanet</title>
+	<title>ACM ('.$module.') | ACore Simple framework php</title>
 </head>
 <body>	
 </body>
