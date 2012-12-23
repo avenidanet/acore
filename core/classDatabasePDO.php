@@ -21,7 +21,11 @@ class DatabasePDO extends PDO{
 	public function __construct()
 	{
 		$this->acore = Settings::Init();
-		parent::__construct('mysql:host=' . $this->acore->host . ';dbname=' . $this->acore->database,$this->acore->user, $this->acore->pass);
+		try {
+			parent::__construct('mysql:host=' . $this->acore->host . ';dbname=' . $this->acore->database,$this->acore->user, $this->acore->pass);
+		} catch(PDOException $e) {
+			echo "ACore DB_ERROR: ".$e->getMessage();
+		}
 	}
 	
     public static function Init()
@@ -139,25 +143,20 @@ class DatabasePDO extends PDO{
 				}
 			}
 		}
-
+		
 		if($pdos->execute()){
 			if($sentence[0] == "S"){
 				return $pdos->fetchALL(PDO::FETCH_ASSOC);
 			}elseif ($sentence[0] == "I") {
-				$indice = key($data);
-				$where = (is_numeric($data[$indice]))?$data[$indice]:"'".$data[$indice]."'";
-				$search = 'SELECT * FROM '.$table.' WHERE '. $indice . "=" . $where;
-				$response = $this->query($search)->fetchALL(PDO::FETCH_ASSOC);
-				if(empty($response)){
-					return FALSE;
-				}else{
-					return $response;
-				}
+				return PDO::lastInsertId();
 			}else{
 				return TRUE;
 			}
 		}else{
+			echo "ACore DB_ERROR: Check query, enable debug mode.";
+			D::log($sentence);
+			D::log($data);
 			return FALSE;
-		} 	
+		}	
     }
 }
