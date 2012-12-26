@@ -55,10 +55,7 @@ class DatabasePDO extends PDO{
    		$sentence .= ($count)?'COUNT(':'';
    		
    		if(is_array($data)){
-   			foreach ($data as $field => $value){
-   				$sentence .= $value . ',';
-   			}
-   			$sentence = substr($sentence, 0, -1);
+   			$sentence .= implode(',', $data);
    		}else{
    			$sentence .= $data;
    		}
