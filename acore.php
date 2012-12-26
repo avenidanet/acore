@@ -22,7 +22,9 @@ class acore{
 	private $config;
 
 	public function __construct($level = 0){
-		session_start();
+		if (!session_id()) {
+	      session_start();
+	    }
 		include_once("settings.php");
 		$this->setLevel($level);
 		$this->config = Settings::Init();
