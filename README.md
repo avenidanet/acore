@@ -1,4 +1,4 @@
-ACore | Simple Framework PHP v.5.0.0
+ACore | Simple Framework PHP v.5.1.0
 =====
 
 http://www.avenidanet.com
@@ -8,6 +8,13 @@ Documentación y proyecto en http://www.avenidanet.com/acore (No habilitado toda
 Desarrollo orientado a módulos (basados en Model View Controller).
 Cada modulo es llamado ACM (ACore Módulo).
 Además gestiona fácilmente base de datos, templates, llamados a apis, validaciones, etc.
+
+V.5.1.0
+- Se ha minizado la cantidad de clases (D,JS,Url,Validate eliminadas).
+- Se crea una clase A, con metodos estaticos que recopila las clases anteriores.
+- Se agrega soporte para AngularJS y otras librerias (JQuery, swfObject).
+- Metodo fancy log (Mejor visualizacion del debug).
+- El instalador (creador de modulos) se optimizó y se puede personalizar a la hora de crear un modulo.
 
 Este desarrollo esta bajo licencia MIT.
 

@@ -1,6 +1,6 @@
 <?php
 /**
-* ACore v.5.0.0
+* ACore v.5.1.0
 *
 * Simple framework php
 *

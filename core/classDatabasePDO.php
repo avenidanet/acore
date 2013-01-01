@@ -1,6 +1,6 @@
 <?php
 /**
-* ACore v.5.0.0
+* ACore v.5.1.0
 *
 * Simple framework php
 *
@@ -127,8 +127,8 @@ class DatabasePDO extends PDO{
      */
     private function sendQuery($sentence,$data,$table=NULL){
     	if($this->acore->debug){
-    		D::log($sentence);
-    		D::log($data);
+    		A::log($sentence);
+    		A::log($data);
     	}
         $pdos = $this->prepare($sentence);
 		if(!empty($data)){
@@ -151,8 +151,8 @@ class DatabasePDO extends PDO{
 			}
 		}else{
 			echo "ACore DB_ERROR: Check query, enable debug mode.";
-			D::log($sentence);
-			D::log($data);
+			A::log($sentence);
+			A::log($data);
 			return FALSE;
 		}	
     }
