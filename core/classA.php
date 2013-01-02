@@ -15,13 +15,19 @@
 
 class A{
 	
-	public static function script($data){
+	public static function script($data,$load=''){
 		$CDN = array(	'jquery'=>'<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>',
 						'angular'=>'<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>',
 						'swfObject'=>'<script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>');
 		$jss = explode(',',$data);
 		foreach ($jss as $js){
 			echo $CDN[$js];
+		}
+		if($load != ''){
+			$jss = self::files($load);
+			foreach ($jss as $js){
+				echo '<script src="'.$js.'"></script>';
+			}
 		}
 	}
 	
@@ -92,6 +98,21 @@ class A{
 			}
 		}else{
 			return false;
+		}
+	}
+	
+	public static function files($path){ 
+		if (is_dir($path)) { 
+			if ($dh = opendir($path)) { 
+				$files = array();
+				while (($file = readdir($dh)) !== false) { 
+					if (!is_dir($path . $file)){
+						$files[] = $path.$file;
+					}
+				} 
+				closedir($dh);
+				return $files;
+			} 
 		}
 	}
 	/*

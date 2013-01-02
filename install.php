@@ -104,14 +104,32 @@ html:5>div#container');
 * ACM ('.$module.') created by ACore -'.time().'
 */
 
-/* Main module */		
+/* '.$module.' | angularjs module */		
 		
 angular.module("'.$module.'", []).
-  config(["$routeProvider", function($routeProvider) {
-  $routeProvider.
-      when("/OPTION_URL/:OPTION", {templateUrl: "TEMPLATE.HTML",   controller: NAME_CONTROLLER}).
-      otherwise({redirectTo: "/OPTION_URL"});
-}]);
+  	config(function($routeProvider,$locationProvider) {
+	  	$routeProvider.
+	    when("/OPTION_URL/:OPTION", {templateUrl: "TEMPLATE.HTML",   controller: NAME_CONTROLLER}).
+	    otherwise({redirectTo: "/OPTION_URL"});
+		$locationProvider.html5Mode(true);
+	}).
+  	run(function(){ //Init }).
+	value("CONSTANT", 123).
+  	factory("METHOD", function() { 
+		return function(text){ 
+			return text; //Methods
+	  	} 
+  	}).
+	filter("NAME_FILTER", function(){
+		return function() {
+			return "FILTER"; //Format
+		};
+  	}).
+  	directive("TAG",function(){
+	  	return function(element){
+			return element; //Custom tags ng
+		}
+  	});
 
 /* Controllers */
 		
