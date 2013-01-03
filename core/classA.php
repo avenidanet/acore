@@ -26,7 +26,9 @@ class A{
 		if($load != ''){
 			$jss = self::files($load);
 			foreach ($jss as $js){
-				echo '<script src="'.$js.'"></script>';
+				if(substr($js,-3) == ".js"){
+					echo '<script src="'.$js.'"></script>';
+				}
 			}
 		}
 	}
