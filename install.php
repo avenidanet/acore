@@ -11,20 +11,21 @@
  *
  */
 
+function create_file($path_name,$content){
+	$file= fopen($path_name, "w+");
+	fwrite($file,$content);
+	fclose($file);	
+}
+
 if(isset($_GET['module'])){
 
-	//name module
-	$module = $_GET['module'];
+//Templates
+$module = $_GET['module'];
 	
-	if(!file_exists('../'.$module)){
-		$copyright = " // ACM (".$module.") created by ACore -".time()."
+$copyright = " // ACM (".$module.") created by ACore -".time()."
 ";
-		//create directory
-		mkdir('../'.$module);
-		
-		//create config
-		$f_config = fopen('../'.$module.'/config.php', "w+");
-fwrite($f_config,'<?php'.$copyright
+	
+$config = '<?php'.$copyright
 .'$config = Settings::Init();
 $config->debug = FALSE;
 $config->host = "localhost";
@@ -33,36 +34,24 @@ $config->pass = "root";
 $config->database = "database";
 $config->fb_apikey = "";
 $config->fb_secret = "";
-$config->fb_url = "https://www.facebook.com";');
-		fclose($f_config);
-		
-		//create controller
-		$f_controller = fopen('../'.$module.'/'.$module.'Controller.php', "w+");
-fwrite($f_controller,'<?php'.$copyright
-.'class '.$module.'Controller extends AbstractController{
+$config->fb_url = "https://www.facebook.com";';
 	
-}');
-		fclose($f_controller);
+$controller = '<?php'.$copyright
+.'class '.$module.'Controller extends AbstractController{
 		
-		//create model
-		$f_model = fopen('../'.$module.'/'.$module.'Model.php', "w+");
-fwrite($f_model,'<?php'.$copyright
+}';
+
+$model = '<?php'.$copyright
 .'class '.$module.'Model extends AbstractModel{
 	
-}');
-		fclose($f_model);
-		
-		//create view
-$f_view = fopen('../'.$module.'/'.$module.'View.php', "w+");
-fwrite($f_view,'<?php'.$copyright
+}';
+
+$view = '<?php'.$copyright
 .'class '.$module.'View extends AbstractView{
 	
-}');
-		fclose($f_view);
-		
-		//create index
-		$index = fopen('../'.$module.'/index.php', "w+");
-fwrite($index,'<?php'.$copyright.'?>
+}';
+
+$index_module = '<?php'.$copyright.'?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -71,41 +60,20 @@ fwrite($index,'<?php'.$copyright.'?>
 </head>
 <body>	
 </body>
-</html>');
-		fclose($index);
-		
-		$mensaje = "<h2>Module created!.</h2>
-		<p><strog>Do not forget to delete this file when you create modules</strog></p>";
-		
-		if(isset($_GET['delete'])){
-			unlink('install.php');
-		}
-		
-		//create structure
-		if(isset($_GET['structure']) && $_GET['structure'] != ''){
-			$folders = explode(',',$_GET['structure']);
-			foreach($folders as $folder){
-				mkdir('../'.trim($folder));
-			}
-			$init = fopen('../index.php', "w+");
-			fwrite($init, '<?php'.$copyright.'
+</html>';
+
+$init = '<?php'.$copyright.'
 include "acore/acore.php";
 $app = new acore;
 ?>
-html:5>div#container');
-			fclose($init);
-		}
-		
-		//create init file AngularJS
-		if(isset($_GET['angular'])){
-			mkdir('../js');
-			$angular = fopen('../js/app.js', "w+");
-			fwrite($angular,'/**
+html:5>div#container';
+
+$angular = '/**
 * ACM ('.$module.') created by ACore -'.time().'
 */
 
-/* '.$module.' | angularjs module */		
-		
+/* '.$module.' | angularjs module */
+
 angular.module("'.$module.'", []).
   	config(function($routeProvider,$locationProvider) {
 	  	$routeProvider.
@@ -115,10 +83,10 @@ angular.module("'.$module.'", []).
 	}).
   	run(function(){ //Init }).
 	value("CONSTANT", 123).
-  	factory("METHOD", function() { 
-		return function(text){ 
+  	factory("METHOD", function() {
+		return function(text){
 			return text; //Methods
-	  	} 
+	  	}
   	}).
 	filter("NAME_FILTER", function(){
 		return function() {
@@ -132,7 +100,7 @@ angular.module("'.$module.'", []).
   	});
 
 /* Controllers */
-		
+
 function NAME_CONTROLLER($scope, $routeParams, $location, $http){
 	$scope.ATTRIBUTE = $routeParams.OPTION;
 	$scope.METHOD = function(){
@@ -144,19 +112,13 @@ function NAME_CONTROLLER($scope, $routeParams, $location, $http){
 	}).
 	error(function() {
 		console.log("error");
-	})			
-}');
-			fclose($angular);			
-		}
-		
-		//create init file AngularJS
-		if(isset($_GET['css'])){
-			mkdir('../css');
-			$css = fopen('../css/'.$module.'.css', "w+");
-			fwrite($css,'/**
+	})
+}';
+
+$css = '/**
 * ACM ('.$module.') created by ACore -'.time()."
 */
-/* http://meyerweb.com/eric/tools/css/reset/ 
+/* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
@@ -169,8 +131,8 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
 	margin: 0;
@@ -181,7 +143,7 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
+article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
@@ -203,15 +165,56 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+/* CSS Module ".$module." */
+";
+
+$index_html = "";
+	
+	if(!file_exists('../'.$module)){
+
+		//create directory
+		mkdir('../'.$module);
 		
-/* CSS Module ".$module." */");
-			fclose($css);
+		create_file('../'.$module.'/config.php', $config);
+		create_file('../'.$module.'/'.$module.'Controller.php', $controller);
+		create_file('../'.$module.'/'.$module.'Model.php', $model);
+		create_file('../'.$module.'/'.$module.'View.php', $view);
+		create_file('../'.$module.'/index.php', $index_module);
+		
+		$mensaje = "<h2>Module created!.</h2>";
+		
+		if(isset($_GET['delete'])){
+			unlink('install.php');
+		}else{
+			$mensaje .= "<p><strog>Do not forget to delete this file when you create modules</strog></p>";
+		}
+		
+		//create structure
+		if(isset($_GET['structure']) && $_GET['structure'] != ''){
+			$folders = explode(',',$_GET['structure']);
+			foreach($folders as $folder){
+				mkdir('../'.trim($folder));
+				create_file('../'.trim($folder).'/index.html', $index_html);
+			}
+			create_file('../index.php', $init);
+		}
+		
+		//create init file AngularJS
+		if(isset($_GET['angular'])){
+			mkdir('../js');
+			create_file('../js/app.js', $angular);			
+		}
+		
+		//create css reset
+		if(isset($_GET['css'])){
+			mkdir('../css');
+			create_file('../css/'.$module.'.css', $css);
 		}		
 		
 	}else{
 		$mensaje = "<h2>Module already exists.</h2>";
 	}
-
 }
 ?>
 <!doctype html>
