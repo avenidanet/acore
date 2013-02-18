@@ -75,11 +75,10 @@ $angular = '/**
 /* '.$module.' | angularjs module */
 
 angular.module("'.$module.'", []).
-  	config(function($routeProvider,$locationProvider) {
+  	config(function($routeProvider) {
 	  	$routeProvider.
 	    when("/OPTION_URL/:OPTION", {templateUrl: "TEMPLATE.HTML",   controller: NAME_CONTROLLER}).
 	    otherwise({redirectTo: "/OPTION_URL"});
-		$locationProvider.html5Mode(true);
 	}).
   	run(function(){ //Init }).
 	value("CONSTANT", 123).
