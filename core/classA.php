@@ -18,7 +18,8 @@ class A{
 	public static function script($data,$load=''){
 		$CDN = array(	'jquery'=>'<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>',
 						'angular'=>'<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>',
-						'swfObject'=>'<script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>');
+						'swfObject'=>'<script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>',
+						'validate'=>'<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>');
 		$jss = explode(',',$data);
 		foreach ($jss as $js){
 			echo $CDN[$js];
