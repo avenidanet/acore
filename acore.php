@@ -25,7 +25,6 @@ class acore{
 		if (!session_id()) {
 	      session_start();
 	    }
-		include_once("settings.php");
 		$this->setLevel($level);
 		$this->config = Settings::Init();
 		if($this->config->debug){
@@ -47,14 +46,11 @@ class acore{
 		$view = $this->path.$nameModule.'/'.$nameModule."View.php";
 		$file_config = $this->path.$nameModule.'/config.php';
 		
-		if(file_exists($controller) && file_exists($model) && file_exists($view)){
+		if(file_exists($controller) && file_exists($model) && file_exists($view) && file_exists($file_config)){
+			include_once($file_config);
 			include_once($controller);
 			include_once($model);
 			include_once($view);
-
-			if(file_exists($file_config)){
-				include_once($file_config);
-			}
 			
 			$classController = $nameModule . "Controller";
 			$this->controllers[$nameModule] = new $classController;
