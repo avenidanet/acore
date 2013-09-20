@@ -31,7 +31,7 @@ class Settings{
 		if(isset($this->vars[$name])){
     		return $this->vars[$name];
 		} else {
-			echo "Variable no definida";
+			echo "ACORE(Class Settings): Not defined ".$name;
 		}
     }
     

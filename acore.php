@@ -27,11 +27,6 @@ class acore{
 	    }
 		$this->setLevel($level);
 		$this->config = Settings::Init();
-		if($this->config->debug){
-			error_reporting(-1);
-		}else{
-			error_reporting(0);
-		}
 	}
 	
 	private function setLevel($level){
